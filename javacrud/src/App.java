@@ -217,6 +217,8 @@ public class App {
 
                             <th>ID</th>
 
+                            <th>Nif</th>
+
                             <th>Nome</th>
 
                             <th>Email</th>
@@ -253,6 +255,8 @@ public class App {
 
                     int id = rs.getInt("id");
 
+                    String nif = rs.getString("nif");
+
                     String nome = rs.getString("nome");
 
                     String email = rs.getString("email");
@@ -263,6 +267,8 @@ public class App {
                     html.append("<tr>");
 
                     html.append("<td>").append(id).append("</td>");
+
+                    html.append("<td>").append(nif).append("</td>");
 
                     html.append("<td>").append(nome).append("</td>");
 
@@ -362,6 +368,9 @@ public class App {
 
                     <input name='nome' required>
 
+                    Nif:
+
+                    <input name='nif' type='nif' required>
 
                     Email:
 
@@ -421,8 +430,9 @@ public class App {
 
                 String[] params = body.split("&");
 
-
                 String nome = "";
+
+                String nif = "";
 
                 String email = "";
 
@@ -445,6 +455,8 @@ public class App {
 
                             case "nome": nome = value; break;
 
+                            case "nif": nif = value; break;
+
                             case "email": email = value; break;
 
                             case "telefone": telefone = value; break;
@@ -466,16 +478,17 @@ public class App {
                 }
 
 
-                String sql = "INSERT INTO clientes(nome,email,telefone) VALUES (?,?,?)";
+                String sql = "INSERT INTO clientes(nome,nif,email,telefone) VALUES (?,?,?,?)";
 
                 PreparedStatement ps = con.prepareStatement(sql);
 
-
                 ps.setString(1, nome);
 
-                ps.setString(2, email);
+                ps.setString(2, nif);
 
-                ps.setString(3, telefone);
+                ps.setString(3, email);
+
+                ps.setString(4, telefone);
 
 
                 ps.executeUpdate();
@@ -620,6 +633,8 @@ public class App {
 
         String nome = rs.getString("nome");
 
+        String nif = rs.getString("nif");
+
         String email = rs.getString("email");
 
         String telefone = rs.getString("telefone");
@@ -661,6 +676,7 @@ public class App {
 
         html.append("<input type='hidden' name='id' value='").append(id).append("'>");
 
+        html.append("nif:<input name='nif' value='").append(nif).append("' required>");
 
         html.append("Nome:<input name='nome' value='").append(nome).append("' required>");
 
@@ -745,8 +761,9 @@ server.createContext("/atualizar", exchange -> {
 
         String[] params = body.split("&");
 
-
         String idStr = "";
+
+        String nif = "";
 
         String nome = "";
 
@@ -770,6 +787,8 @@ server.createContext("/atualizar", exchange -> {
                 switch (key) {
 
                     case "id": idStr = value; break;
+
+                    case "nif": nif = value; break;
 
                     case "nome": nome = value; break;
 
@@ -804,11 +823,13 @@ server.createContext("/atualizar", exchange -> {
 
         ps.setString(1, nome);
 
-        ps.setString(2, email);
+        ps.setString(2, nif);
 
-        ps.setString(3, telefone);
+        ps.setString(3, email);
 
-        ps.setInt(4, id);
+        ps.setString(4, telefone);
+
+        ps.setInt(5, id);
 
 
         ps.executeUpdate();
