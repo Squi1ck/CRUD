@@ -816,7 +816,7 @@ server.createContext("/atualizar", exchange -> {
         }
 
 
-        String sql = "UPDATE clientes SET nome=?, email=?, telefone=? WHERE id=?";
+        String sql = "UPDATE clientes SET nome=?,nif=?,email=?, telefone=? WHERE id=?";
 
         PreparedStatement ps = con.prepareStatement(sql);
 
