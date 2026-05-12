@@ -67,6 +67,44 @@ public class App {
 
                                     margin-top: 50px;
 
+                                    display: inline-block;
+
+                                    background: white;
+
+                                    padding: 30px;
+
+                                    margin: 20px;
+
+                                    border-radius: 10px;
+
+                                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+                                    width: 200px;
+
+                                }
+                                    .container a {
+
+                                    display: block;
+
+                                    text-decoration: none;
+
+                                    color: white;
+
+                                    background: #40739e;
+
+                                    padding: 10px;
+
+                                    border-radius: 5px;
+
+                                    margin-top: 15px;
+
+                                }
+
+
+                                .container a:hover {
+
+                                    background: #273c75;
+
                                 }
 
 
@@ -131,6 +169,30 @@ public class App {
 
 
                             <div class="container">
+
+
+                                <h3>+ ver produto</h3>
+
+                                <p>Consultar lista completa</p>
+
+                                <a href="/clientes">abir</a>
+
+                            </div>
+
+
+                            <div class="container">
+
+                                <h3>inserir produto</h3>
+
+                                <p>Adicionar novo registo</p>
+
+                                 <a href="/novo">inserir</a>
+
+                            </div>
+
+                        </body>
+
+                        </html>
 
 
                                 <div class="card">
@@ -213,6 +275,24 @@ public class App {
 
 
                     <table>
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Nif</th>
+
+                            <th>Nome</th>
+
+                            <th>Email</th>
+
+                            <th>Telefone</th>
+
+                            <th>Ações</th>
+
+                        </tr>
+
+                        <table>
 
                         <tr>
 
@@ -1033,167 +1113,7 @@ server.createContext("/atualizar", exchange -> {
         });   
 
 
-        /// HOME
-
-        server.createContext("/", exchange -> {
-
-
-            String html = """ 
-
-                <html>
-
-                <head>
-
-                    <meta charset="UTF-8">
-
-                    <title>Sistema de produtos</title>
-
-                    <style>
-
-                        body {
-
-                            font-family: Arial, sans-serif;
-
-                            background-color: #f5f6fa;
-
-                            text-align: center;
-
-                            margin: 0;
-
-                        }
-
-
-                        header {
-
-                            background-color: #2f3640;
-
-                            color: white;
-
-                            padding: 20px;
-
-                        }
-
-
-                        h1 {
-
-                            margin: 0;
-
-                        }
-
-
-                        .container {
-
-                            margin-top: 50px;
-
-                        }
-
-
-                        .card {
-
-                            display: inline-block;
-
-                            background: white;
-
-                            padding: 30px;
-
-                            margin: 20px;
-
-                            border-radius: 10px;
-
-                            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-
-                            width: 200px;
-
-                        }
-
-
-                        .card a {
-
-                            display: block;
-
-                            text-decoration: none;
-
-                            color: white;
-
-                            background: #40739e;
-
-                            padding: 10px;
-
-                            border-radius: 5px;
-
-                            margin-top: 15px;
-
-                        }
-
-
-                        .card a:hover {
-
-                            background: #273c75;
-
-                        }
-
-                    </style>
-
-                </head>
-
-                <body>
-
-
-                    <header>
-
-                        <h1>Sistema de Produtos</h1>
-
-                        <p>Gestão simples com Java + MySQL</p>
-
-                    </header>
-
-
-                    <div class="container">
-
-
-                        <div class="card">
-
-                            <h3>Ver Produtos</h3>
-
-                            <p>Consultar lista completa</p>
-
-                            <a href="/produtos">Abrir</a>
-
-                        </div>
-
-
-                        <div class="card">
-
-                            <h3>+ Novo Produto</h3>
-
-                            <p>Adicionar novo registo</p>
-
-                            <a href="/novo">Criar</a>
-
-                        </div>
-
-
-                    </div>
-
-
-                </body>
-
-                </html>
-
-            """;
-
-
-            exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
-
-            exchange.sendResponseHeaders(200, html.getBytes().length);
-
-            exchange.getResponseBody().write(html.getBytes());
-
-            exchange.close();
-
-        });
-
-
+          //// LISTA
 
         server.createContext("/produtos", exchange -> {
 
@@ -1333,6 +1253,702 @@ server.createContext("/atualizar", exchange -> {
             exchange.close();
 
         });
+
+
+   // FORM NOVO CLIENTE
+
+        server.createContext("/produtonovo", exchange -> {
+
+
+            StringBuilder html = new StringBuilder();
+
+
+            html.append("""
+
+                <html>
+
+                <head>
+
+                    <meta charset="UTF-8">
+
+                    <style>
+
+                        body { font-family: Arial; }
+
+                        form { width: 300px; }
+
+                        input { width: 100%; padding: 8px; margin-bottom: 10px; }
+
+                        button { padding: 8px 12px; }
+
+                        a { text-decoration: none; }
+
+                    </style>
+
+                </head>
+
+                <body>
+
+
+                <h2>Novo Produto</h2>
+
+
+                <a href='/produtos'>← Voltar à lista</a><br><br>
+
+
+                <form method='POST' action='/guardar'>
+
+                    refproduto:
+
+                    <input name='refproduto' required>
+
+
+                    Produto:
+
+                    <input name='produto' required>
+
+
+                    Preço:
+
+                    <input name='preco' type='number' step='0.01' required>
+
+
+                    <button type='submit'>Guardar</button>
+
+                </form>
+
+
+                </body>
+
+                </html>
+
+            """);
+
+
+            exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
+
+            exchange.sendResponseHeaders(200, html.toString().getBytes().length);
+
+            exchange.getResponseBody().write(html.toString().getBytes());
+
+            exchange.close();
+
+        }); 
+
+
+        // GUARDAR NOVO CLIENTE
+
+        server.createContext("/produtoguardar", exchange -> {
+
+
+            if (!exchange.getRequestMethod().equalsIgnoreCase("POST")) {
+
+                exchange.sendResponseHeaders(405, -1);
+
+                return;
+
+            }
+
+
+            StringBuilder html = new StringBuilder();
+
+
+            try {
+
+                // Ler body
+
+                String body = new String(exchange.getRequestBody().readAllBytes(), "UTF-8");
+
+
+                String[] params = body.split("&");
+
+
+                String refproduto = "";
+
+                String produto = "";
+
+                String preco = "";
+
+
+                for (String p : params) {
+
+                    String[] kv = p.split("=");
+
+
+                    if (kv.length == 2) {
+
+                        String key = kv[0];
+
+                        String value = java.net.URLDecoder.decode(kv[1], "UTF-8");
+
+
+                        switch (key) {
+
+                            case "refproduto": refproduto = value; break;
+
+                            case "produto": produto = value; break;
+
+                            case "preco": preco = value; break;
+
+                        }
+
+                    }
+
+                }
+
+
+                Connection con = LigacaoBD.ligar();
+
+
+                if (con == null) {
+
+                    throw new Exception("Ligação à BD falhou!");
+
+                }
+
+
+                String sql = "INSERT INTO produtos(refproduto,produto,preco) VALUES (?,?,?)";
+
+                PreparedStatement ps = con.prepareStatement(sql);
+
+
+                ps.setString(1, refproduto);
+
+                ps.setString(2, produto);
+
+                ps.setString(3, preco);
+
+
+                ps.executeUpdate();
+
+
+                ps.close();
+
+                con.close();
+
+
+                // HTML de sucesso 
+
+                html.append("""
+
+                    <html>
+
+                    <head>
+
+                        <meta charset="UTF-8">
+
+                        <style>
+
+                            body { font-family: Arial; }
+
+                            a { text-decoration: none; }
+
+                        </style>
+
+                    </head>
+
+                    <body>
+
+
+                    <h2>:-) Produto guardado com sucesso!</h2>
+
+
+                    <a href='/produtos'>Ver lista</a><br><br>
+
+                    <a href='/novo'>Inserir novo produto</a>
+
+
+                    </body>
+
+                    </html>
+
+                """);
+
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+
+
+                html.append("""
+
+                    <html>
+
+                    <head>
+
+                        <meta charset="UTF-8">
+
+                    </head>
+
+                    <body>
+
+
+                    <h2>!! Erro ao guardar produto!</h2>
+
+                    <a href='/novo'>Voltar</a>
+
+
+                    </body>
+
+                    </html>
+
+                """);
+
+            }
+
+
+            exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
+
+            exchange.sendResponseHeaders(200, html.toString().getBytes().length);
+
+            exchange.getResponseBody().write(html.toString().getBytes());
+
+            exchange.close();
+
+        });
+
+          // FORM EDITAR
+
+    server.createContext("/produtoeditar", exchange -> {
+
+
+    StringBuilder html = new StringBuilder();
+
+
+    try {
+
+        String query = exchange.getRequestURI().getQuery();
+
+
+        if (query == null || !query.contains("id=")) {
+
+            throw new Exception("ID inválido");
+
+        }
+
+
+        int id = Integer.parseInt(query.split("=")[1]);
+
+
+        Connection con = LigacaoBD.ligar();
+
+
+        if (con == null) {
+
+            throw new Exception("Ligação à BD falhou!");
+
+        }
+
+
+        String sql = "SELECT * FROM produtos WHERE id=?";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ps.setInt(1, id);
+
+
+        ResultSet rs = ps.executeQuery();
+
+
+        if (!rs.next()) {
+
+            throw new Exception("Produto não encontrado");
+
+        }
+
+
+        String refproduto = rs.getString("refproduto");
+
+        String produto = rs.getString("produto");
+
+        String preco = rs.getString("preco");
+
+
+        html.append("""
+
+            <html>
+
+            <head>
+
+                <meta charset="UTF-8">
+
+                <style>
+
+                    body { font-family: Arial; }
+
+                    input { width: 100%; padding: 8px; margin-bottom: 10px; }
+
+                    form { width: 300px; }
+
+                </style>
+
+            </head>
+
+            <body>
+
+
+            <h2>Editar Produto</h2>
+
+
+            <a href='/produtos'>« Voltar</a><br><br>
+
+
+            <form method='POST' action='/atualizar'>
+
+        """);
+
+
+        html.append("<input type='hidden' name='id' value='").append(id).append("'>");
+
+
+        html.append("Referência:<input name='refproduto' value='").append(refproduto).append("' required>");
+
+        html.append("Produto:<input name='produto' value='").append(produto).append("' required>");
+
+        html.append("Preço:<input name='preco' value='").append(preco).append("'>");
+
+
+        html.append("""
+
+            <button type='submit'>Atualizar</button>
+
+            </form>
+
+
+            </body>
+
+            </html>
+
+        """);
+
+
+        rs.close();
+
+        ps.close();
+
+        con.close();
+
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+
+
+        html.append("""
+
+            <html>
+
+            <body>
+
+            <h2>!Erro ao carregar produto</h2>
+
+            <a href='/produtos'>Voltar</a>
+
+            </body>
+
+            </html>
+
+        """);
+
+    }
+
+
+    exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
+
+    exchange.sendResponseHeaders(200, html.toString().getBytes().length);
+
+    exchange.getResponseBody().write(html.toString().getBytes());
+
+    exchange.close();
+
+    }); 
+
+
+    // ATUALIZAR PRODUTO
+
+    server.createContext("/produtoatualizar", exchange -> {
+
+
+    if (!exchange.getRequestMethod().equalsIgnoreCase("POST")) {
+
+        exchange.sendResponseHeaders(405, -1);
+
+        return;
+
+    }
+
+
+    try {
+
+        String body = new String(exchange.getRequestBody().readAllBytes(), "UTF-8");
+
+
+        String[] params = body.split("&");
+
+
+        String idStr = "";
+
+        String refproduto = "";
+
+        String produto = "";
+
+        String preco = "";
+
+
+        for (String p : params) {
+
+            String[] kv = p.split("=");
+
+
+            if (kv.length == 2) {
+
+                String key = kv[0];
+
+                String value = java.net.URLDecoder.decode(kv[1], "UTF-8");
+
+
+                switch (key) {
+
+                    case "id": idStr = value; break;
+
+                    case "refproduto": refproduto = value; break;
+
+                    case "produto": produto = value; break;
+
+                    case "preco": preco = value; break;
+
+                }
+
+            }
+
+        }
+
+
+        int id = Integer.parseInt(idStr);
+
+
+        Connection con = LigacaoBD.ligar();
+
+
+        if (con == null) {
+
+            throw new Exception("Ligação à BD falhou!");
+
+        }
+
+
+        String sql = "UPDATE produtos SET refproduto=?, produto=?, preco=? WHERE id=?";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+
+
+        ps.setString(1, refproduto);
+
+        ps.setString(2, produto);
+
+        ps.setString(3, preco);
+
+        ps.setInt(4, id);
+
+
+        ps.executeUpdate();
+
+
+        ps.close();
+
+        con.close();
+
+
+        // Redirect (melhor UX)
+
+        exchange.getResponseHeaders().add("Location", "/produtos");
+
+        exchange.sendResponseHeaders(302, -1);
+
+        exchange.close();
+
+        return;
+
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+
+
+        String resp = """
+
+            <html>
+
+            <body>
+
+            <h2>!Erro ao atualizar produto</h2>
+
+            <a href='/produtos'>Voltar</a>
+
+            </body>
+
+            </html>
+
+        """;
+
+
+        exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
+
+        exchange.sendResponseHeaders(200, resp.getBytes().length);
+
+        exchange.getResponseBody().write(resp.getBytes());
+
+        exchange.close();
+
+    }
+
+    }); 
+
+        // ELIMINAR CLIENTE
+
+        server.createContext("/produtoapagar", exchange -> {
+
+
+            StringBuilder html = new StringBuilder();
+
+
+            try {
+
+                String query = exchange.getRequestURI().getQuery();
+
+
+                if (query == null || !query.contains("id=")) {
+
+                    throw new Exception("ID inválido");
+
+                }
+
+
+                int id = Integer.parseInt(query.split("=")[1]);
+
+
+                Connection con = LigacaoBD.ligar();
+
+
+                if (con == null) {
+
+                    throw new Exception("Ligação à BD falhou!");
+
+                }
+
+
+                String sql = "DELETE FROM produtos WHERE id=?";
+
+                PreparedStatement ps = con.prepareStatement(sql);
+
+
+                ps.setInt(1, id);
+
+
+                int rows = ps.executeUpdate();
+
+
+                ps.close();
+
+                con.close();
+
+
+                html.append("""
+
+                    <html>
+
+                    <head>
+
+                        <meta charset="UTF-8">
+
+                        <style>
+
+                            body { font-family: Arial; }
+
+                            a { text-decoration: none; }
+
+                        </style>
+
+                    </head>
+
+                    <body>
+
+                """);
+
+
+                if (rows > 0) {
+
+                    html.append("""
+
+                        <h2>Produto apagado com sucesso!</h2>
+
+                        <a href='/produtos'>Voltar à lista</a>
+
+                    """);
+
+                } else {
+
+                    html.append("""
+
+                        <h2>! Produto não encontrado!</h2>
+
+                        <a href='/produtos'>Voltar</a>
+
+                    """);
+
+                }
+
+
+                html.append("""
+
+                    </body>
+
+                    </html>
+
+                """);
+
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+
+
+                html.append("""
+
+                    <html>
+
+                    <head>
+
+                        <meta charset="UTF-8">
+
+                    </head>
+
+                    <body>
+
+
+                    <h2>!!! Erro ao apagar produto!</h2>
+
+                    <a href='/produtos'>Voltar</a>
+
+
+                    </body>
+
+                    </html>
+
+                """);
+
+            }
+
+
+            exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
+
+            exchange.sendResponseHeaders(200, html.toString().getBytes().length);
+
+            exchange.getResponseBody().write(html.toString().getBytes());
+
+            exchange.close();
+
+        });   
 
         server.start();
 
