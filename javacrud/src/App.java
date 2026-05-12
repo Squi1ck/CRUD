@@ -292,24 +292,9 @@ public class App {
 
                         </tr>
 
-                        <table>
+                    <h2>Lista de Produtos</h2>
 
-                        <tr>
-
-                            <th>ID</th>
-
-                            <th>Nif</th>
-
-                            <th>Nome</th>
-
-                            <th>Email</th>
-
-                            <th>Telefone</th>
-
-                            <th>Ações</th>
-
-                        </tr>
-
+                  
                 """);             
 
 
@@ -1154,15 +1139,24 @@ server.createContext("/atualizar", exchange -> {
 
                         <tr>
 
+                              <a href='/novo'>+ Novo Produto</a><br><br>
+
+                    <table>
+
+                        <tr>
+
                             <th>ID</th>
 
-                            <th>Referência</th>
+                            <th>refproduto</th>
 
-                            <th>Nome</th>
+                            <th>produto</th>
 
-                            <th>Preço</th>
+                            <th>preco</th>
 
                             <th>Ações</th>
+
+                        </tr>
+
 
                         </tr>
 
